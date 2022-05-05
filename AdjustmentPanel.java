@@ -8,7 +8,6 @@ public class AdjustmentPanel extends JPanel
 {
     private final int num = 10;
     private int size = 0;
-    private int save = 1;
     private JLabel[] labels = new JLabel[num];
     private JTextField[] fields = new JTextField[num];
 
@@ -42,7 +41,7 @@ public class AdjustmentPanel extends JPanel
     public void input(){
         Scanner input;
         try{
-            input = new Scanner(new File ("PISS//save" + save + ".txt"));
+            input = new Scanner(new File ("PISS//save" + SavePanel.getText() + ".txt"));
         }
         catch(Exception e){
             System.out.println("no such file");
