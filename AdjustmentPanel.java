@@ -1,4 +1,6 @@
-package frc.robot.gui;
+package frc.robot.gui.panel;
+
+import frc.robot.gui.SystemOutHandler;
 
 import java.awt.*;
 import javax.swing.*;
@@ -7,7 +9,6 @@ import java.io.*;
 
 public class AdjustmentPanel extends JPanel {
 	private final int num;
-	private int size = 0;
 	private JLabel[] labels;
 	private JTextField[] fields;
 
@@ -18,8 +19,10 @@ public class AdjustmentPanel extends JPanel {
 		this.fields = new JTextField[this.num * 2];
 
 		setLayout(new GridLayout(this.num, 2));
+		String[] keys = entries.keySet().toArray(new String[0]);
+
 		for (int i = 0; i < this.num; i++) {
-			labels[i] = new JLabel("PID value");
+			labels[i] = new JLabel(keys[i]);
 			labels[i].setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 18));
 			labels[i].setForeground(Color.black);
 			this.add(labels[i]);
@@ -32,15 +35,13 @@ public class AdjustmentPanel extends JPanel {
 	}
 
 	public void save() {
-		try {
-			System.setOut(new PrintStream(new FileOutputStream("PISS\\save" + (SavePanel.getSaveCount() + 1) + ".txt")));
-		} catch (Exception e) {
-			return;
-		}
-		System.out.println(size);
-		for (int i = 0; i < size; ++i) {
+		String outPath = "PISS\\save" + (SavePanel.getSaveCount() + 1) + ".txt";
+		SystemOutHandler.setOutStream(outPath);
+		System.out.println(num);
+		for (int i = 0; i < num; ++i) {
 			System.out.println(Double.parseDouble(fields[i].getText()));
 		}
+		SystemOutHandler.resetOutStream();
 	}
 
 	public void input() {
@@ -51,10 +52,13 @@ public class AdjustmentPanel extends JPanel {
 			System.out.println("no such file");
 			return;
 		}
-		size = input.nextInt();
-		for (int i = 0; i < size; ++i) {
+		// num = input.nextInt();
+		input.nextDouble();
+		System.out.println(num);
+		for (int i = 0; i < num; ++i) {
 			fields[i].setText("" + input.nextDouble());
 		}
 		input.close();
+
 	}
 }

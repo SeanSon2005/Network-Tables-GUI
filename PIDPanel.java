@@ -1,9 +1,8 @@
-package frc.robot.gui;
+package frc.robot.gui.panel;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.io.*;
 import java.util.*;
 
 public class PIDPanel extends JPanel {
