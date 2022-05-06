@@ -1,6 +1,8 @@
 package frc.robot.gui.panel;
 
+import frc.robot.Main;
 import frc.robot.gui.SystemOutHandler;
+import frc.robot.robot.NetworkTablesReader;
 
 import java.awt.*;
 import javax.swing.*;
@@ -38,8 +40,14 @@ public class AdjustmentPanel extends JPanel {
 		String outPath = "PISS\\save" + (SavePanel.getSaveCount() + 1) + ".txt";
 		SystemOutHandler.setOutStream(outPath);
 		System.out.println(num);
+		NetworkTablesReader ntr = NetworkTablesReader.getInstance();
+		HashMap<String, String> entries = Main.entries;
+
 		for (int i = 0; i < num; ++i) {
-			System.out.println(Double.parseDouble(fields[i].getText()));
+			double val = Double.parseDouble(fields[i].getText());
+			System.out.println(val);
+			// System.out.println("try to get " + labels[i].getText());
+			ntr.setDoubleEntry(labels[i].getText(), val);
 		}
 		SystemOutHandler.resetOutStream();
 	}
